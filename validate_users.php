@@ -1,32 +1,28 @@
 <?php
-$userId = NULL;
-$password = NULL;
-
-function validate_users($id_input, $password_input){ //function parameters, two variables.
-
+function validate_users($id_input, $password_input)
+{ 
     $credentials = explode(",",
     file_get_contents('gs://cloud-computing-a1-php.appspot.com/users.txt')
     );
-
-    $arrlength=count($primes);
-
-    if ($arrlength == 2)
+    $arrlength=count($credentials);
+    if ($arrlength)
     {
-        $userId = $credentials[0];
-        $password = $credentials[1];
-
-        if (strcmp($userId, $id_input) == 0 and strcmp($password, $password_input) == 0){
-            return true;
-        }
-        else{
-            echo "Error: User name or password is invalid";
+        $userId = trim($credentials[0]);
+        $password = trim($credentials[1]);
+        // echo "Stored username is ".$userId;
+        // echo "Stored password is ".$password;
+        // echo "Entered username is ".$id_input;
+        // echo "Entered password is ".$password_input;
+        if (strcmp($userId, $id_input) || strcmp($password, $password_input)){
             return false;
         }
-        
+        else{
+            return true;
+        }
     }
     else 
     {
-        echo "Error: User name or password is invalid;
         return false;
     }
 }
+?>
